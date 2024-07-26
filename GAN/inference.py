@@ -22,9 +22,23 @@ Image.MAX_IMAGE_PIXELS = None
 
 def main():
     """
-    Function that handles upscaling low-resolution (LR) images or processing paired datasets for evaluating model performance using a pretrained generative model.
+    Handling upscaling low-resolution (LR) images or processing paired datasets for evaluating model performance using a pretrained generative model.
+    Important parameters:
+        tile_size: tile size (w&h) in pixels. Maximize this value for efficiency, but when running into GPU memory
+            limitations, set to a lower value. 750 works well for most workstation GPUs (8GB). Only relevant when
+            processing maps.
+        seamless: set to true to prevent seam lines between tiles. Inference takes a bit longer. Only relevant when
+            processing maps
+        batch_size: specifies the batch size for the dataloader when processing paired datasets. 50 works well for
+            most workstations (assuming 8 GB GPU memory).
+
+    When running inference on a map, output is written to disk as either tiles, a BigTIFF map, or both. When evaluating
+    a paired dataset, output is written to disk as generated tiles and, if required, as composite grids that allow direct
+    comparison of LR/HR/Generated data.
     """
 
+    tile_size = 750  # Choose appropriate tile size wrp to GPU memory
+    batch_size = 50  # Set appropriate for GPU memory
     seamless = True  # No seam lines in up-scaled data -- comes with a minor computational expense
 
     weights = select_file('Select generator model.', 'Generator model.', [('PyTorch state dictionary', '.pth')])
@@ -39,7 +53,6 @@ def main():
         composite_grid = yes_no_inp('Create composite grids of the results?\n')
 
     else:
-        tile_size = 750  # Choose appropriate tile size wrp to GPU memory
         weights2 = None
         composite_grid = False
         separate = False
@@ -63,7 +76,7 @@ def main():
         # Use dataloader to generate batches
         dataloader = DataLoader(
             PairedImageDataset(os.path.join(datadir, "HR"), os.path.join(datadir, "LR")),
-            batch_size=50,  # Set appropriate for gpu memory
+            batch_size=batch_size,  # Set appropriate for gpu memory
             shuffle=False,
             num_workers=0,
         )
