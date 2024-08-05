@@ -120,6 +120,7 @@ def register(im1, im2, im1mask=None, PhiInit=None, PhiRigid=False, PhiInitBinRat
         This correlation was written in the style of S. Roux (especially "An extension of Digital Image Correlation for intermodality image registration")
         especially equations 12 and 13.
     """
+
     # Explicitly set input images to floats
     im1 = im1.astype('<f4')
     im2 = im2.astype('<f4')
@@ -418,7 +419,6 @@ def register(im1, im2, im1mask=None, PhiInit=None, PhiRigid=False, PhiInitBinRat
         # Error calculation
         error = _errorCalc(im1crop, im2def[crop2])
 
-
         # Catch divergence condition after half of the max iterations
         if errorPrev < error * 0.8 and iterations > maxIterations / 2:
             # undo this bad Phi which has increased the error:
@@ -467,7 +467,8 @@ def register(im1, im2, im1mask=None, PhiInit=None, PhiRigid=False, PhiInitBinRat
                 plt.imshow(im2def[crop2][:, im1crop.shape[1] // 2, :], cmap='Greys_r', vmin=0, vmax=vmax)
                 plt.subplot(3, 3, 6)
                 plt.title('im1-im2def Y-slice')
-                plt.imshow(numpy.subtract(im1crop, im2def[crop2])[:, im1crop.shape[1] // 2, :], cmap='coolwarm', vmin=vmin,
+                plt.imshow(numpy.subtract(im1crop, im2def[crop2])[:, im1crop.shape[1] // 2, :], cmap='coolwarm',
+                           vmin=vmin,
                            vmax=vmax)
                 # if imShowProgress == "X" or imShowProgress == "x":
                 # if imShowProgressNewFig: plt.figure()
@@ -480,7 +481,8 @@ def register(im1, im2, im1mask=None, PhiInit=None, PhiRigid=False, PhiInitBinRat
                 plt.imshow(im2def[crop2][:, :, im1crop.shape[2] // 2], cmap='Greys_r', vmin=0, vmax=vmax)
                 plt.subplot(3, 3, 9)
                 plt.title('im1-im2def X-slice')
-                plt.imshow(numpy.subtract(im1crop, im2def[crop2])[:, :, im1crop.shape[2] // 2], cmap='coolwarm', vmin=vmin,
+                plt.imshow(numpy.subtract(im1crop, im2def[crop2])[:, :, im1crop.shape[2] // 2], cmap='coolwarm',
+                           vmin=vmin,
                            vmax=vmax)
             plt.pause(0.01)
 
@@ -513,9 +515,10 @@ def register(im1, im2, im1mask=None, PhiInit=None, PhiRigid=False, PhiInitBinRat
         maskCOM = spam.label.centresOfMass(im1mask[crop1])[-1]
         # print("Mask COM", maskCOM)
         # print( "\nNormal Phi:\n", Phi)
-        Phi[0:3, -1] = spam.deformation.decomposePhi(Phi.copy(), PhiCentre=(numpy.array(im1crop.shape) - 1) / 2.0, PhiPoint=maskCOM)["t"]
+        Phi[0:3, -1] = \
+        spam.deformation.decomposePhi(Phi.copy(), PhiCentre=(numpy.array(im1crop.shape) - 1) / 2.0, PhiPoint=maskCOM)[
+            "t"]
         # print( "\nF in mask:\n", F)
-
 
     reg = {'error': error,
            'Phi': Phi,

@@ -1,8 +1,8 @@
 import os
-import time
 import math
 import czifile
 import tifffile
+import time as tm
 import scipy.ndimage
 from skimage import io
 from datetime import *
@@ -57,9 +57,9 @@ def extract_from_map(map_, tile_, factor_, plot):
             factor_ = 1 / factor_
             print(factor_)
             map_ = downscale_local_mean(map_, (factor_, factor_))
-    start = time.time()
+    start = tm.time()
     result = match_template(map_, tile_)
-    end = time.time()
+    end = tm.time()
     #  print('Match template time:', end - start)
     ij = np.unravel_index(np.argmax(result), result.shape)
     x, y = ij[::-1]

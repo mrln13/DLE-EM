@@ -1,8 +1,5 @@
 import numpy
 import spam.DIC
-import spam.label  # for im1mask
-import spam.deformation
-import spam.DIC.DICToolkit
 from registerModified import register
 
 

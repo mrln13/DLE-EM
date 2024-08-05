@@ -12,7 +12,7 @@ def match2D(
         factor,  # Resolution difference factor
         binStart=16,  # Downscale factor to begin correlation with
         binStop=4,  # Final downscale factor
-        maxIterations=250,  # Maximum iterations for each bin step)
+        maxIterations=100,  # Maximum iterations for each bin step)
         showProgress=True,
 ):
     """
@@ -34,7 +34,8 @@ def match2D(
     :return: string
         Path of the corrected HR map
     """
-    max_len = 1000000  # set max tensor size to avoid issues when calculating dot product. When running into memory
+    max_len = 100000
+    # set max tensor size to avoid issues when calculating dot product. When running into memory
     # issues, lower this value
 
     # Read data
