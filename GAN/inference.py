@@ -1,4 +1,5 @@
 import czifile
+import argparse
 import warnings
 import tifffile
 import rasterio
@@ -37,9 +38,16 @@ def main():
     comparison of LR/HR/Generated data.
     """
 
-    tile_size = 750  # Choose appropriate tile size wrp to GPU memory
-    batch_size = 50  # Set appropriate for GPU memory
-    seamless = True  # No seam lines in up-scaled data -- comes with a minor computational expense
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--tile_size", type=int, default=750, help="Determines the size of image tiles to be processed. This needs to be adjusted based on the available GPU memory.")
+    parser.add_argument("--batch_size", type=int, default=50, help="Controls how many images are processed in parallel during paired dataset evaluation.")
+    parser.add_argument("--seamless", type=bool, default=True, help="If set to True, the script ensures there are no seam lines between tiles, though this increases computational cost slightly")
+    opt = parser.parse_args()
+    print(opt)
+
+    tile_size = opt.tile_size
+    batch_size = opt.batch_size
+    seamless = opt.seamless
 
     weights = select_file('Select generator model.', 'Generator model.', [('PyTorch state dictionary', '.pth')])
     factor = int_inp('Factor of resolution difference?\n', minval=2, maxval=8)

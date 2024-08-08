@@ -104,7 +104,7 @@ def reg2D(
         factor,             # Resolution of tile with respect to map
         plot=True,          # Show results
         binStart=32,        # Resize factor to start binning with
-        binStop=1,          # Resize factor to stop binning
+        binStop=4,          # Resize factor to stop binning
         intermediate=True,  # Save intermediate results (in folder 'intermediate')
         log2crop=True,      # Crop to dimension that is a power of 2 (set to True for best results)
         multi_path=None     # Path when called to locate more than 1 HR region

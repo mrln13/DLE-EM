@@ -46,7 +46,7 @@ After training is finished, or stopped, training can be resumed by providing the
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--epoch", type=int, default=0, help="epoch to start training from")
-    parser.add_argument("--n_epochs", type=int, default=20, help="number of epochs of training")
+    parser.add_argument("--n_epochs", type=int, default=100, help="number of epochs of training")
     parser.add_argument("--dataset_name", type=str, default="Dataset", help="name of the dataset")
     parser.add_argument("--batch_size", type=int, default=80, help="size of the batches - depends on GPU memory")
     parser.add_argument("--lr", type=float, default=1e-4, help="adam: learning rate")
