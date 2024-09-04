@@ -23,11 +23,7 @@ unknown microstructures, promising to advance the field of geoscience and materi
 
 **Workflow Overview**
 
-<object data="https://github.com/mrln13/DLE-EM/blob/main/workflow.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="https://github.com/mrln13/DLE-EM/blob/main/workflow.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/mrln13/DLE-EM/blob/main/workflow.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
+![DLE-EM workflow overview](/workflow.png)
 
 Overview of the DLE-EM workflow applied to the gabbro dataset. Panels **a**, **b**, and **c** schematically illustrate the process of generating training data, 
 having a HR area within a LR dataset. Panel **d** showcases how the training data is utilized to construct both the *discriminator* and
